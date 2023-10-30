@@ -39,11 +39,18 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "main",
     "jdk.selected.JAVA_MODULE": "19",
     "last_opened_file_path": "C:/Users/bronz/Desktop/MS_SQL converter/kjghtgiuykuyuj.xml",
-    "settings.editor.selected.configurable": "vcs.Git",
+    "settings.editor.selected.configurable": "vcs.Mercurial",
     "two.files.diff.last.used.file": "C:/Users/bronz/Desktop/MS_SQL converter/kjghtgiuykuyuj.xml"
+  },
+  "keyToStringList": {
+    "GitStage.ChangesTree.GroupingKeys": [
+      "directory",
+      "module",
+      "repository"
+    ]
   }
 }]]></component>
   <component name="RecentsManager">
