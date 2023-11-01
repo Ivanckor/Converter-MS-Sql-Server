@@ -7,25 +7,16 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
-
     <artifactId>converter</artifactId>
     <packaging>jar</packaging>
-
     <name>converter module</name>
 
-
     <properties>
+    <!--  This is required for later correct replacement of argline -->
         <argLine/>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
@@ -67,9 +58,30 @@
             <version>4.12</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
+    <resources>
+      <resource>
+        <directory>src/test/resources/</directory>
+        <filtering>false</filtering>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources/</directory>
+        <filtering>false</filtering>
+        <excludes>
+          <exclude>**/*.java</exclude>
+        </excludes>
+      </testResource>
+    </testResources>
         <plugins>
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
@@ -110,7 +122,39 @@
                     </execution>
                 </executions>
             </plugin>
-
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>${build-helper-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>../antlr4/runtime/Java/src</source>
+                <source>src/gen/java/</source>
+                <source>src/main/java/</source>
+              </sources>
+            </configuration>
+          </execution>
+          <execution>
+            <id>add-test-source</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>add-test-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>src/test/</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -147,10 +191,7 @@
                     <reuseForks>false</reuseForks>
                     <trimStackTrace>false</trimStackTrace>
                     <rerunFailingTestsCount>3</rerunFailingTestsCount>
-                    <argLine>@{surefireArgLine} -Xmx16G --add-opens java.base/java.lang=ALL-UNNAMED --add-opens
-                        java.base/java.util=ALL-UNNAMED --add-opens java.base/javax.crypto=ALL-UNNAMED
-                        -Djdk.attach.allowAttachSelf=true -XX:+StartAttachListener
-                    </argLine>
+          <argLine>@{surefireArgLine} -Xmx16G --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/javax.crypto=ALL-UNNAMED -Djdk.attach.allowAttachSelf=true -XX:+StartAttachListener</argLine>
                 </configuration>
             </plugin>
             <plugin>
